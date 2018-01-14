@@ -33,11 +33,14 @@ public class ArrayHeap<E> implements Heap<E> {
 
 	@Override
 	public void insertElement(E element) throws NotComparableException {
-		/// Check if comparable MISSING
-		ensureExtraCapacity();
-		elements[n + 1] = element;
-		n++;
-		upHeap();
+		if (c.isComparable(element)) {
+			ensureExtraCapacity();
+			elements[n + 1] = element;
+			n++;
+			upHeap();
+		} else {
+			throw new NotComparableException("Value is not comparable");
+		}
 	}
 
 	@Override
@@ -102,7 +105,14 @@ public class ArrayHeap<E> implements Heap<E> {
 	}
 
 	public static <E> void heapSort(List<E> list, Comparator<E> comparator) {
-
+		ArrayHeap<E> heap = new ArrayHeap<>(comparator);
+		for (int i = 0; i < list.size(); i++) {
+			heap.insertElement(list.get(i));
+		}
+		list.clear();
+		while (heap.size() != 0) {
+			list.add(heap.removeMin());
+		}
 	}
 
 	private int getLeftChildIndex(int parentIndex) {

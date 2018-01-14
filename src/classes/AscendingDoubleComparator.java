@@ -7,38 +7,44 @@ public class AscendingDoubleComparator implements Comparator<Double> {
 
 	@Override
 	public boolean isLessThan(Double x, Double y) throws NotComparableException {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			return x < y;
+		} catch (Exception e) {
+			throw new NotComparableException("Value is not comparable");
+		}
 	}
 
 	@Override
 	public boolean isLessThanOrEqualTo(Double x, Double y) throws NotComparableException {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			return x <= y;
+		} catch (Exception e) {
+			throw new NotComparableException("Value is not comparable");
+		}
 	}
 
 	@Override
 	public boolean isEqualTo(Double x, Double y) throws NotComparableException {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			return (Double.compare(x, y) == 0) ? true : false;
+		} catch (Exception e) {
+			throw new NotComparableException("Value is not comparable");
+		}
 	}
 
 	@Override
 	public boolean isGreaterThan(Double x, Double y) throws NotComparableException {
-		// TODO Auto-generated method stub
-		return false;
+		return !this.isLessThanOrEqualTo(x, y);
 	}
 
 	@Override
 	public boolean isGreaterThanOrEqualTo(Double x, Double y) throws NotComparableException {
-		// TODO Auto-generated method stub
-		return false;
+		return !this.isLessThan(x, y);
 	}
 
 	@Override
 	public boolean isComparable(Double x) {
-		// TODO Auto-generated method stub
-		return false;
+		return x != null;
 	}
 
 }

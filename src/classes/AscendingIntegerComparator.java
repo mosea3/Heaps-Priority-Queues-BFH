@@ -34,20 +34,12 @@ public class AscendingIntegerComparator implements Comparator<Integer> {
 
 	@Override
 	public boolean isGreaterThan(Integer x, Integer y) throws NotComparableException {
-		try {
-			return x > y;
-		} catch (Exception e) {
-			throw new NotComparableException("Value is not comparable");
-		}
+		return !this.isLessThanOrEqualTo(x, y);
 	}
 
 	@Override
 	public boolean isGreaterThanOrEqualTo(Integer x, Integer y) throws NotComparableException {
-		try {
-			return x >= y;
-		} catch (Exception e) {
-			throw new NotComparableException("Value is not comparable");
-		}
+		return !this.isLessThan(x, y);
 	}
 
 	@Override

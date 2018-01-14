@@ -13,12 +13,12 @@ public class DescendingIntegerComparator implements Comparator<Integer> {
 
 	@Override
 	public boolean isLessThan(Integer x, Integer y) throws NotComparableException {
-		return c.isGreaterThanOrEqualTo(x, y);
+		return c.isGreaterThan(x, y);
 	}
 
 	@Override
 	public boolean isLessThanOrEqualTo(Integer x, Integer y) throws NotComparableException {
-		return c.isGreaterThan(x, y);
+		return c.isGreaterThanOrEqualTo(x, y);
 	}
 
 	@Override
@@ -28,12 +28,12 @@ public class DescendingIntegerComparator implements Comparator<Integer> {
 
 	@Override
 	public boolean isGreaterThan(Integer x, Integer y) throws NotComparableException {
-		return c.isLessThanOrEqualTo(x, y);
+		return c.isLessThan(x, y);
 	}
 
 	@Override
 	public boolean isGreaterThanOrEqualTo(Integer x, Integer y) throws NotComparableException {
-		return c.isLessThan(x, y);
+		return c.isLessThanOrEqualTo(x, y);
 	}
 
 	@Override
