@@ -43,12 +43,15 @@ public class ArrayHeap<E> implements Heap<E> {
 	@Override
 	/*
 	 * poll
+	 * 
 	 * @see interfaces.Heap#removeMin()
 	 */
 	public E removeMin() throws EmptyHeapException {
-		if (n == 0) throw new EmptyHeapException();
+		if (n == 0)
+			throw new EmptyHeapException();
 		E element = elements[1];
 		elements[1] = elements[n];
+		elements[n] = null;
 		n--;
 		downHeap();
 		return element;
@@ -57,66 +60,71 @@ public class ArrayHeap<E> implements Heap<E> {
 	@Override
 	/*
 	 * peek
+	 * 
 	 * @see interfaces.Heap#minElement()
 	 */
 	public E minElement() throws EmptyHeapException {
-		if (n == 0) throw new EmptyHeapException();
+		if (n == 0)
+			throw new EmptyHeapException();
 		return elements[1];
-		
+
 	}
 
 	private void downHeap() {
-		downHeap(1);	
+		downHeap(1);
 	}
+
 	private void downHeap(int index) {
-		int j;
-		if (index <= n) { // left child exists
-			if (getRightChildIndex(index) <= n) { // right child exists
+		int newIndex;
+		if (hasLeftChild(index)) { // left child exists
+			if (hasRightChild(index)) { // right child exists
 				if (c.isLessThan(leftChild(index), rightChild(index))) {
-					j = getLeftChildIndex(index);
+					newIndex = getLeftChildIndex(index);
+				} else {
+					newIndex = getRightChildIndex(index);
 				}
-				else {
-					j = getRightChildIndex(index);
-				}
+			} else {
+				newIndex = getLeftChildIndex(index);
 			}
-			else {
-				j = getLeftChildIndex(index);
-			}
-			if (c.isLessThan(leftChild(index), rightChild(index))) {
-				swap(index, j);
-				downHeap(j);
+			if (c.isLessThan(elements[newIndex], elements[index])) {
+				swap(index, newIndex);
+				downHeap(newIndex);
 			}
 		}
 	}
 
 	private void upHeap() {
 		int index = n;
-		while (hasParent(index) && c.isGreaterThan(parent(index), elements[index] )) {
+		while (hasParent(index) && c.isGreaterThan(parent(index), elements[index])) {
 			swap(getParentIndex(index), index);
 			index = getParentIndex(index);
 		}
 	}
 
 	public static <E> void heapSort(List<E> list, Comparator<E> comparator) {
-		
+
 	}
-	
+
 	private int getLeftChildIndex(int parentIndex) {
 		return parentIndex * 2;
 	}
+
 	private int getRightChildIndex(int parentIndex) {
 		return parentIndex * 2 + 1;
 	}
+
 	private int getParentIndex(int childIndex) {
 		return childIndex / 2;
 	}
 
 	private boolean hasLeftChild(int index) {
-		return getLeftChildIndex(index) < n;
+		return getLeftChildIndex(index) <= n && leftChild(index) != null;
 	}
+
 	private boolean hasRightChild(int index) {
-		return getRightChildIndex(index) < n;
+		return getRightChildIndex(index) <= n && rightChild(index) != null;
 	}
+
 	private boolean hasParent(int index) {
 		return getParentIndex(index) >= 1;
 	}
@@ -124,9 +132,11 @@ public class ArrayHeap<E> implements Heap<E> {
 	private E leftChild(int index) {
 		return elements[getLeftChildIndex(index)];
 	}
+
 	private E rightChild(int index) {
 		return elements[getRightChildIndex(index)];
 	}
+
 	private E parent(int index) {
 		return elements[getParentIndex(index)];
 	}

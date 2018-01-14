@@ -5,41 +5,40 @@ import interfaces.Comparator;
 
 public class DescendingIntegerComparator implements Comparator<Integer> {
 
+	private AscendingIntegerComparator c;
+
+	public DescendingIntegerComparator() {
+		c = new AscendingIntegerComparator();
+	}
+
 	@Override
 	public boolean isLessThan(Integer x, Integer y) throws NotComparableException {
-		// TODO Auto-generated method stub
-		return false;
+		return c.isGreaterThanOrEqualTo(x, y);
 	}
 
 	@Override
 	public boolean isLessThanOrEqualTo(Integer x, Integer y) throws NotComparableException {
-		// TODO Auto-generated method stub
-		return false;
+		return c.isGreaterThan(x, y);
 	}
 
 	@Override
 	public boolean isEqualTo(Integer x, Integer y) throws NotComparableException {
-		// TODO Auto-generated method stub
-		return false;
+		return c.isEqualTo(x, y);
 	}
 
 	@Override
 	public boolean isGreaterThan(Integer x, Integer y) throws NotComparableException {
-		// TODO Auto-generated method stub
-		return false;
+		return c.isLessThanOrEqualTo(x, y);
 	}
 
 	@Override
 	public boolean isGreaterThanOrEqualTo(Integer x, Integer y) throws NotComparableException {
-		// TODO Auto-generated method stub
-		return false;
+		return c.isLessThan(x, y);
 	}
 
 	@Override
 	public boolean isComparable(Integer x) {
-		// TODO Auto-generated method stub
-		return false;
+		return c.isComparable(x);
 	}
-
 
 }

@@ -7,7 +7,11 @@ public class AscendingIntegerComparator implements Comparator<Integer> {
 
 	@Override
 	public boolean isLessThan(Integer x, Integer y) throws NotComparableException {
-		return x < y;
+		try {
+			return x < y;
+		} catch (Exception e) {
+			throw new NotComparableException("Value is not comparable");
+		}
 	}
 
 	@Override
@@ -15,23 +19,35 @@ public class AscendingIntegerComparator implements Comparator<Integer> {
 		try {
 			return x <= y;
 		} catch (Exception e) {
-			throw new NotComparableException();
+			throw new NotComparableException("Value is not comparable");
 		}
 	}
 
 	@Override
 	public boolean isEqualTo(Integer x, Integer y) throws NotComparableException {
-		return x == y;
+		try {
+			return x == y;
+		} catch (Exception e) {
+			throw new NotComparableException("Value is not comparable");
+		}
 	}
 
 	@Override
 	public boolean isGreaterThan(Integer x, Integer y) throws NotComparableException {
-		return x > y;
+		try {
+			return x > y;
+		} catch (Exception e) {
+			throw new NotComparableException("Value is not comparable");
+		}
 	}
 
 	@Override
 	public boolean isGreaterThanOrEqualTo(Integer x, Integer y) throws NotComparableException {
-		return x >= y;
+		try {
+			return x >= y;
+		} catch (Exception e) {
+			throw new NotComparableException("Value is not comparable");
+		}
 	}
 
 	@Override
