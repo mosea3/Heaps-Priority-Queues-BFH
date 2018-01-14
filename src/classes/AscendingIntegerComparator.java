@@ -12,7 +12,11 @@ public class AscendingIntegerComparator implements Comparator<Integer> {
 
 	@Override
 	public boolean isLessThanOrEqualTo(Integer x, Integer y) throws NotComparableException {
-		return x <= y;
+		try {
+			return x <= y;
+		} catch (Exception e) {
+			throw new NotComparableException();
+		}
 	}
 
 	@Override
