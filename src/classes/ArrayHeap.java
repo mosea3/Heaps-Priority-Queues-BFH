@@ -1,6 +1,7 @@
 package classes;
 
 import java.util.Arrays;
+import java.util.List;
 
 import exceptions.EmptyHeapException;
 import exceptions.NotComparableException;
@@ -27,7 +28,7 @@ public class ArrayHeap<E> implements Heap<E> {
 
 	@Override
 	public boolean isEmpty() {
-		return n > 0;
+		return n == 0;
 	}
 
 	@Override
@@ -96,6 +97,10 @@ public class ArrayHeap<E> implements Heap<E> {
 		}
 	}
 
+	public static <E> void heapSort(List<E> list, Comparator<E> comparator) {
+		
+	}
+	
 	private int getLeftChildIndex(int parentIndex) {
 		return parentIndex * 2;
 	}
