@@ -1,9 +1,11 @@
 package classes;
 
 import exceptions.NotComparableException;
-import interfaces.Comparator;
 
-public class AscendingStringComparator implements Comparator<String> {
+/*
+ * Comparator which orders strings ascending
+ */
+public class AscendingStringComparator extends StandardComparator<String> {
 
 	@Override
 	public boolean isLessThan(String x, String y) throws NotComparableException {
@@ -14,7 +16,7 @@ public class AscendingStringComparator implements Comparator<String> {
 				return false;
 			}
 		} catch (Exception e) {
-			throw new NotComparableException("Value is not comparable");
+			throw new NotComparableException();
 		}
 	}
 
@@ -27,7 +29,7 @@ public class AscendingStringComparator implements Comparator<String> {
 				return false;
 			}
 		} catch (Exception e) {
-			throw new NotComparableException("Value is not comparable");
+			throw new NotComparableException();
 		}
 	}
 
@@ -36,38 +38,7 @@ public class AscendingStringComparator implements Comparator<String> {
 		try {
 			return x.equals(y);
 		} catch (Exception e) {
-			throw new NotComparableException("Value is not comparable");
+			throw new NotComparableException();
 		}
-	}
-
-	@Override
-	public boolean isGreaterThan(String x, String y) throws NotComparableException {
-		try {
-			if (x.compareTo(y) > 0) {
-				return true;
-			} else {
-				return false;
-			}
-		} catch (Exception e) {
-			throw new NotComparableException("Value is not comparable");
-		}
-	}
-
-	@Override
-	public boolean isGreaterThanOrEqualTo(String x, String y) throws NotComparableException {
-		try {
-			if (x.compareTo(y) >= 0) {
-				return true;
-			} else {
-				return false;
-			}
-		} catch (Exception e) {
-			throw new NotComparableException("Value is not comparable");
-		}
-	}
-
-	@Override
-	public boolean isComparable(String x) {
-		return x != null;
 	}
 }

@@ -26,7 +26,6 @@ public class ArrayHeap<E> implements Heap<E> {
 	 */
 	private int n;
 
-	
 	@SuppressWarnings("unchecked")
 	public ArrayHeap(Comparator<E> comparator) {
 		this.c = comparator;
@@ -36,6 +35,7 @@ public class ArrayHeap<E> implements Heap<E> {
 
 	/*
 	 * Size of heap
+	 * 
 	 * @see interfaces.BasicCollection#size()
 	 */
 	@Override
@@ -45,6 +45,7 @@ public class ArrayHeap<E> implements Heap<E> {
 
 	/*
 	 * If the heap is empty, it returns 1, otherwise it returns 0
+	 * 
 	 * @see interfaces.BasicCollection#isEmpty()
 	 */
 	@Override
@@ -54,6 +55,7 @@ public class ArrayHeap<E> implements Heap<E> {
 
 	/*
 	 * Inserts a given element to the heap
+	 * 
 	 * @see interfaces.Heap#insertElement(java.lang.Object)
 	 */
 	@Override
@@ -64,7 +66,7 @@ public class ArrayHeap<E> implements Heap<E> {
 			n++;
 			upHeap();
 		} else {
-			throw new NotComparableException("Value is not comparable");
+			throw new NotComparableException();
 		}
 	}
 

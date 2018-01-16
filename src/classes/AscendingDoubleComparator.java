@@ -1,16 +1,18 @@
 package classes;
 
 import exceptions.NotComparableException;
-import interfaces.Comparator;
 
-public class AscendingDoubleComparator implements Comparator<Double> {
+/*
+ * Comparator which orders doubles ascending
+ */
+public class AscendingDoubleComparator extends StandardComparator<Double> {
 
 	@Override
 	public boolean isLessThan(Double x, Double y) throws NotComparableException {
 		try {
 			return x < y;
 		} catch (Exception e) {
-			throw new NotComparableException("Value is not comparable");
+			throw new NotComparableException();
 		}
 	}
 
@@ -19,7 +21,7 @@ public class AscendingDoubleComparator implements Comparator<Double> {
 		try {
 			return x <= y;
 		} catch (Exception e) {
-			throw new NotComparableException("Value is not comparable");
+			throw new NotComparableException();
 		}
 	}
 
@@ -28,23 +30,8 @@ public class AscendingDoubleComparator implements Comparator<Double> {
 		try {
 			return (Double.compare(x, y) == 0) ? true : false;
 		} catch (Exception e) {
-			throw new NotComparableException("Value is not comparable");
+			throw new NotComparableException();
 		}
-	}
-
-	@Override
-	public boolean isGreaterThan(Double x, Double y) throws NotComparableException {
-		return !this.isLessThanOrEqualTo(x, y);
-	}
-
-	@Override
-	public boolean isGreaterThanOrEqualTo(Double x, Double y) throws NotComparableException {
-		return !this.isLessThan(x, y);
-	}
-
-	@Override
-	public boolean isComparable(Double x) {
-		return x != null;
 	}
 
 }

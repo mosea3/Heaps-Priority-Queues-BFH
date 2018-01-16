@@ -3,8 +3,14 @@ package classes;
 import exceptions.NotComparableException;
 import interfaces.Comparator;
 
-public abstract class InvertedComparator<E> implements Comparator<E> {
+/*
+ * Inverts a given comparator
+ */
+public abstract class InvertedComparator<E> extends StandardComparator<E> {
 
+	/*
+	 * Comparator to invert
+	 */
 	Comparator<E> c;
 	
 	public InvertedComparator(Comparator<E> c) {
@@ -23,15 +29,4 @@ public abstract class InvertedComparator<E> implements Comparator<E> {
 		return c.isEqualTo(x, y);
 	}
 
-	public boolean isGreaterThan(E x, E y) throws NotComparableException{
-		return c.isLessThan(x, y);
-	}
-
-	public boolean isGreaterThanOrEqualTo(E x, E y) throws NotComparableException{
-		return c.isLessThanOrEqualTo(x, y);	
-	}
-
-	public boolean isComparable(E x) {
-		return c.isComparable(x);	
-	}
 }
