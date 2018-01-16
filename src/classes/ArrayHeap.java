@@ -8,20 +8,20 @@ import exceptions.NotComparableException;
 import interfaces.Comparator;
 import interfaces.Heap;
 
-/*
+/***
  * This class is a Array implementation of a Heap
  */
 public class ArrayHeap<E> implements Heap<E> {
 
-	/*
+	/**
 	 * List of all elements in the Heap
 	 */
 	private E[] elements;
-	/*
+	/**
 	 * The elements are sorted according this Comparator
 	 */
 	private Comparator<E> c;
-	/*
+	/**
 	 * Number of elements in the heap
 	 */
 	private int n;
@@ -33,7 +33,7 @@ public class ArrayHeap<E> implements Heap<E> {
 		elements = (E[]) new Object[1];
 	}
 
-	/*
+	/**
 	 * Size of heap
 	 * 
 	 * @see interfaces.BasicCollection#size()
@@ -43,7 +43,7 @@ public class ArrayHeap<E> implements Heap<E> {
 		return n;
 	}
 
-	/*
+	/**
 	 * If the heap is empty, it returns 1, otherwise it returns 0
 	 * 
 	 * @see interfaces.BasicCollection#isEmpty()
@@ -53,7 +53,7 @@ public class ArrayHeap<E> implements Heap<E> {
 		return n == 0;
 	}
 
-	/*
+	/**
 	 * Inserts a given element to the heap
 	 * 
 	 * @see interfaces.Heap#insertElement(java.lang.Object)
@@ -71,7 +71,7 @@ public class ArrayHeap<E> implements Heap<E> {
 	}
 
 	@Override
-	/*
+	/**
 	 * Removes and returns the first element in the heap
 	 * 
 	 * @see interfaces.Heap#removeMin()
@@ -88,9 +88,9 @@ public class ArrayHeap<E> implements Heap<E> {
 	}
 
 	@Override
-	/*
+	/**
 	 * Returns the first element in the heap
-	 * 
+	 * @return EmptyHeapException - in case that the heap is already empty
 	 * @see interfaces.Heap#minElement()
 	 */
 	public E minElement() throws EmptyHeapException {
@@ -178,12 +178,13 @@ public class ArrayHeap<E> implements Heap<E> {
 		return elements[getParentIndex(index)];
 	}
 
-	/*
+	/**
 	 * Swaps two elements on two given indexes
-	 * 
+	 * @param index1 first element
+	 * @param index2 second element
 	 */
-	private void swap(int index1, int index2) { // synchronized eine ueberlegung wert?
-		elements[0] = elements[index1]; // nowak
+	private void swap(int index1, int index2) { // we do consider the usage of synchronized methods or Threading, so the temp memory is unambiguous
+		elements[0] = elements[index1]; // nowak-hack from lectures
 		elements[index1] = elements[index2];
 		elements[index2] = elements[0];
 	}

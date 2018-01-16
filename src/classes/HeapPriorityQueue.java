@@ -45,7 +45,7 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	}
 
 	/**
-	 * Returns, wheteher Queue is empty
+	 * Returns, whether Queue is empty
 	 * @return <b>boolean</b>: true if empty, otherwise false
 	 */
 	@Override
@@ -60,12 +60,9 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	 * @throws NotComparableException if key not Comparable
 	 * @see interfaces.PriorityQueue#insertItem(java.lang.Object, java.lang.Object)
 	 **/
-	//TODO find better var name for 2nd level element storage
 	@Override
 	public void insertItem(K key, E element) throws NotComparableException {
-		if(!c.isComparable((Integer) key)){
-			throw new NotComparableException();
-		}
+		if(!c.isComparable((Integer) key)) throw new NotComparableException();
 		
 		ArrayList<String> keyStore = null;
 		try{
@@ -79,31 +76,29 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 			keyStore.add((String) element);
 		}else{
 			keyStore = new ArrayList<String>();
-			//System.out.println("Key:" + key + " not previously recorded");
 			keyStore.add((String) element);
 		}
 		elements.put((int) key, keyStore);
 		n++;
-		//System.out.println(this.size() + " is the new PQ size.");
 	}
 
 	/**
 	 * dequeues an Element and returns it
-	 * @return <b>E</b>: returns an Element of Type E, which is to be removed of the Queue (eg. dequeued)
+	 * @return E - returns an Element of Type E, which is to be removed of the Queue (eg. dequeued)
 	 * @throws EmptyPriorityQueueException if there is nothing left to be dequeued
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public E removeMin() throws EmptyPriorityQueueException {
 		if(n<1) throw new EmptyPriorityQueueException(); //short notation for big effects
+		
 		int key = (int) minKey();
 		ArrayList<String> el = elements.get(key);
 		String minElement = el.get(el.size()-1);
 		
 		if(el.size()>1){ 						//if multiple elements under one min key, just dequeue the first one under that key thus it was added as first FIFO
-			el.remove(0);	
+			el.remove(0);						//FIFO, random dequeuing of same-high priority keys would be fair, but increases runtime-complexity	
 		}else{	
-			elements.remove(key);				//remove entire element under key
+			elements.remove(key);				
 		}
 		heap.removeMin();
 		n--;
@@ -114,7 +109,6 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	 * returns the Key to the minimum value
 	 * @throws EmptyPriorityQueueException if Queue is empty
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public K minKey() throws EmptyPriorityQueueException {
 		if(n<1){
@@ -130,9 +124,7 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	 */
 	@Override
 	public E minElement() throws EmptyPriorityQueueException {
-		if(n<1){
-			throw new EmptyPriorityQueueException();
-		}
+		if(n<1) throw new EmptyPriorityQueueException();
 		int key = (int) minKey();
 		ArrayList<String> el = elements.get(key);
 		String minEl = el.get(0);
