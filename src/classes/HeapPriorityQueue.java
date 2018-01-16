@@ -13,7 +13,8 @@ import interfaces.PriorityQueue;
 
 /**
  * This Class HeapPriorityQueue implements a Priority Queue based on a Heap and its comparators.
- * @author mosea3
+ * @author mosea3@bfh.ch
+ * @version 1.0
  * @param <K> a Key of Integer
  * @param <E> an Element
  */
@@ -21,19 +22,21 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 
 	private K[] keys;
 	private Map<Integer, ArrayList> elements;
+	private Comparator<Integer> c;
 	
 	Comparator<Integer> comparator = null;
 	Heap<Integer> heap;
 	private int n;
 	
 	public HeapPriorityQueue(Comparator<Integer> comparator){
-		this.heap = new ArrayHeap<Integer>(comparator);
+		this.c = comparator;
+		this.heap = new ArrayHeap<Integer>(c);
 		this.elements = new HashMap<Integer, ArrayList>();
 		n = 0;
 	}
 	
 	/**
-	 * Returns the size of the Queue
+	 * Returns the current cardinal size of the Queue
 	 * @return <b>Integer</b>: size of the Queue
 	 */ 
 	@Override
@@ -42,7 +45,7 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	}
 
 	/**
-	 * Returns, if Queue is empty
+	 * Returns, wheteher Queue is empty
 	 * @return <b>boolean</b>: true if empty, otherwise false
 	 */
 	@Override
@@ -51,20 +54,20 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	}
 	
 	/**
-	 * inserts an Item (eg. queues an Item)
+	 * enqueues an Item
 	 * @param key key of Integer
 	 * @param element an element
 	 * @throws NotComparableException if key not Comparable
 	 * @see interfaces.PriorityQueue#insertItem(java.lang.Object, java.lang.Object)
 	 **/
-	// TODO check behavior, if a multiple elements w/ same Keys are inserted
+	//TODO find better var name for 2nd level element storage
 	@Override
 	public void insertItem(K key, E element) throws NotComparableException {
-		ArrayList<String> keyStore = null;
-		
-		if(key == null){
+		if(!c.isComparable((Integer) key)){
 			throw new NotComparableException();
 		}
+		
+		ArrayList<String> keyStore = null;
 		try{
 			heap.insertElement((int) key);
 		}catch (NotComparableException e) {
@@ -92,48 +95,18 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public E removeMin() throws EmptyPriorityQueueException {
-		//System.out.println("pq size before dequeuing:"+n);
-		// TODO check behavior if a duplicate key is to be removed
-		//System.out.println("heap size before dequeuing:"+ heap.size());
-		if(n<1){
-			throw new EmptyPriorityQueueException();
-		}
+		if(n<1) throw new EmptyPriorityQueueException(); //short notation for big effects
 		int key = (int) minKey();
-		//System.out.println("dequeing key:"+key);
 		ArrayList<String> el = elements.get(key);
-		
-		//System.out.println(el);
-		
-		//System.out.println("number of el in that index:"+ el.size());
 		String minElement = el.get(el.size()-1);
 		
-		if(el.size()>1){ //if multiple elements under one min key, just dequeue the last one
-						//and do not remove key from heap
-			int deletionIndex = (el.size()-1);
-			el.remove(deletionIndex);
-			//System.out.println("multiple elements found - just dequeue one");
-			//System.out.println("number of el in that index after deletion of single el:"+el.size());
-			
-		}else{
-			//System.out.println("single element - dequeue entire el and index from heap");
-			//remove entire element under key
-			elements.remove(key);
-			
+		if(el.size()>1){ 						//if multiple elements under one min key, just dequeue the first one under that key thus it was added as first FIFO
+			el.remove(0);	
+		}else{	
+			elements.remove(key);				//remove entire element under key
 		}
 		heap.removeMin();
-		
-		
-		//System.out.println("dequeue el with key:"+key);
-		//System.out.println("dequeue el:"+ el);
-		
-		
-		
-		
-		
 		n--;
-		//System.out.println("heap size after dequeuing:"+n);
-		//System.out.println("done dequeuing!");
-		//System.out.println("--------------------------");
 		return (E) minElement;
 	}
 	
@@ -162,9 +135,7 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 		}
 		int key = (int) minKey();
 		ArrayList<String> el = elements.get(key);
-		String minEl = el.get((el.size()-1));
-		
-		
+		String minEl = el.get(0);
 		return (E) minEl;
 	}
 
