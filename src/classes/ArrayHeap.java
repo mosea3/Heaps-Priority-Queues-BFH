@@ -180,11 +180,12 @@ public class ArrayHeap<E> implements Heap<E> {
 
 	/*
 	 * Swaps two elements on two given indexes
+	 * 
 	 */
-	private void swap(int index1, int index2) {
-		E temp = elements[index1];
+	private void swap(int index1, int index2) { // synchronized eine ueberlegung wert?
+		elements[0] = elements[index1]; // nowak
 		elements[index1] = elements[index2];
-		elements[index2] = temp;
+		elements[index2] = elements[0];
 	}
 
 	private void ensureExtraCapacity() {
