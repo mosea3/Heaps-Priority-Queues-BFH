@@ -5,21 +5,12 @@ import exceptions.NotComparableException;
 /*
  * Comparator which orders doubles ascending
  */
-public class AscendingDoubleComparator extends StandardComparator<Double> {
+public class AscendingDoubleComparator extends AscendingComparator<Double> {
 
 	@Override
 	public boolean isLessThan(Double x, Double y) throws NotComparableException {
 		try {
 			return x < y;
-		} catch (Exception e) {
-			throw new NotComparableException();
-		}
-	}
-
-	@Override
-	public boolean isLessThanOrEqualTo(Double x, Double y) throws NotComparableException {
-		try {
-			return x <= y;
 		} catch (Exception e) {
 			throw new NotComparableException();
 		}
