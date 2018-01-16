@@ -27,6 +27,7 @@ public class ArrayHeap<E> implements Heap<E> {
 	private int n;
 
 	
+	@SuppressWarnings("unchecked")
 	public ArrayHeap(Comparator<E> comparator) {
 		this.c = comparator;
 		n = 0;
