@@ -8,29 +8,53 @@ import exceptions.NotComparableException;
 import interfaces.Comparator;
 import interfaces.Heap;
 
+/*
+ * This class is a Array implementation of a Heap
+ */
 public class ArrayHeap<E> implements Heap<E> {
 
+	/*
+	 * List of all elements in the Heap
+	 */
 	private E[] elements;
+	/*
+	 * The elements are sorted according this Comparator
+	 */
 	private Comparator<E> c;
+	/*
+	 * Number of elements in the heap
+	 */
 	private int n;
 
-	@SuppressWarnings("unchecked")
+	
 	public ArrayHeap(Comparator<E> comparator) {
 		this.c = comparator;
 		n = 0;
 		elements = (E[]) new Object[1];
 	}
 
+	/*
+	 * Size of heap
+	 * @see interfaces.BasicCollection#size()
+	 */
 	@Override
 	public int size() {
 		return n;
 	}
 
+	/*
+	 * If the heap is empty, it returns 1, otherwise it returns 0
+	 * @see interfaces.BasicCollection#isEmpty()
+	 */
 	@Override
 	public boolean isEmpty() {
 		return n == 0;
 	}
 
+	/*
+	 * Inserts a given element to the heap
+	 * @see interfaces.Heap#insertElement(java.lang.Object)
+	 */
 	@Override
 	public void insertElement(E element) throws NotComparableException {
 		if (c.isComparable(element)) {
@@ -45,7 +69,7 @@ public class ArrayHeap<E> implements Heap<E> {
 
 	@Override
 	/*
-	 * poll
+	 * Removes and returns the first element in the heap
 	 * 
 	 * @see interfaces.Heap#removeMin()
 	 */
@@ -62,7 +86,7 @@ public class ArrayHeap<E> implements Heap<E> {
 
 	@Override
 	/*
-	 * peek
+	 * Returns the first element in the heap
 	 * 
 	 * @see interfaces.Heap#minElement()
 	 */
@@ -151,6 +175,9 @@ public class ArrayHeap<E> implements Heap<E> {
 		return elements[getParentIndex(index)];
 	}
 
+	/*
+	 * Swaps two elements on two given indexes
+	 */
 	private void swap(int index1, int index2) {
 		E temp = elements[index1];
 		elements[index1] = elements[index2];
