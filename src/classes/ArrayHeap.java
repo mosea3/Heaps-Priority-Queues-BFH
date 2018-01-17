@@ -35,7 +35,7 @@ public class ArrayHeap<E> implements Heap<E> {
 
 	/**
 	 * Size of heap
-	 * 
+	 * @return Integer, cardinal size of the heap
 	 * @see interfaces.BasicCollection#size()
 	 */
 	@Override
@@ -45,7 +45,7 @@ public class ArrayHeap<E> implements Heap<E> {
 
 	/**
 	 * If the heap is empty, it returns 1, otherwise it returns 0
-	 * 
+	 * @return boolean true, if empty, false otherwise
 	 * @see interfaces.BasicCollection#isEmpty()
 	 */
 	@Override
@@ -55,7 +55,7 @@ public class ArrayHeap<E> implements Heap<E> {
 
 	/**
 	 * Inserts a given element to the heap
-	 * 
+	 * @param element to be pushed
 	 * @see interfaces.Heap#insertElement(java.lang.Object)
 	 */
 	@Override
@@ -103,7 +103,10 @@ public class ArrayHeap<E> implements Heap<E> {
 	private void downHeap() {
 		downHeap(1);
 	}
-
+	/**
+	 * performs a downwards heap order
+	 * @param index starting index
+	 */
 	private void downHeap(int index) {
 		int newIndex;
 		if (hasLeftChild(index)) { // left child exists
@@ -130,7 +133,11 @@ public class ArrayHeap<E> implements Heap<E> {
 			index = getParentIndex(index);
 		}
 	}
-
+	/**
+	 * performs a heap sort on a list
+	 * @param list 
+	 * @param comparator
+	 */
 	public static <E> void heapSort(List<E> list, Comparator<E> comparator) {
 		ArrayHeap<E> heap = new ArrayHeap<>(comparator);
 		for (int i = 0; i < list.size(); i++) {

@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"classes"},{"l":"exceptions"},{"l":"interfaces"},{"l":"tests"}]
+packageSearchIndex = [{"l":"classes"},{"l":"exceptions"},{"l":"interfaces"}]
