@@ -1,6 +1,6 @@
 package classes;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,18 +20,15 @@ import interfaces.PriorityQueue;
  */
 public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 
-	private K[] keys;
-	private Map<Integer, ArrayList> elements;
+	private Map<Integer, LinkedList> elements;
 	private Comparator<Integer> c;
-	
-	Comparator<Integer> comparator = null;
 	Heap<Integer> heap;
 	private int n;
 	
 	public HeapPriorityQueue(Comparator<Integer> comparator){
 		this.c = comparator;
 		this.heap = new ArrayHeap<Integer>(c);
-		this.elements = new HashMap<Integer, ArrayList>();
+		this.elements = new HashMap<Integer, LinkedList>();
 		n = 0;
 	}
 	
@@ -64,7 +61,7 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	public void insertItem(K key, E element) throws NotComparableException {
 		if(!c.isComparable((Integer) key)) throw new NotComparableException();
 		
-		ArrayList<String> keyStore = null;
+		LinkedList<E> keyStore = null;
 		try{
 			heap.insertElement((int) key);
 		}catch (NotComparableException e) {
@@ -72,11 +69,11 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 		}
 		
 		if(elements.containsKey(key)){
-			keyStore = new ArrayList<String>(elements.get(key));
-			keyStore.add((String) element);
+			keyStore = new LinkedList<E>(elements.get(key));
+			keyStore.add(element);
 		}else{
-			keyStore = new ArrayList<String>();
-			keyStore.add((String) element);
+			keyStore = new LinkedList<E>();
+			keyStore.add(element);
 		}
 		elements.put((int) key, keyStore);
 		n++;
@@ -92,17 +89,17 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 		if(n<1) throw new EmptyPriorityQueueException(); //short notation for big effects
 		
 		int key = (int) minKey();
-		ArrayList<String> el = elements.get(key);
-		String minElement = el.get(el.size()-1);
+		LinkedList<E> el = elements.get(key);
+		E minElement = el.getLast();
 		
 		if(el.size()>1){ 						//if multiple elements under one min key, just dequeue the first one under that key thus it was added as first FIFO
-			el.remove(0);						//FIFO, random dequeuing of same-high priority keys would be fair, but increases runtime-complexity	
+			el.remove();						//FIFO, random dequeuing of same-high priority keys would be fair, but increases runtime-complexity	
 		}else{	
 			elements.remove(key);				
 		}
 		heap.removeMin();
 		n--;
-		return (E) minElement;
+		return minElement;
 	}
 	
 	/**
@@ -126,9 +123,9 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	public E minElement() throws EmptyPriorityQueueException {
 		if(n<1) throw new EmptyPriorityQueueException();
 		int key = (int) minKey();
-		ArrayList<String> el = elements.get(key);
-		String minEl = el.get(0);
-		return (E) minEl;
+		LinkedList<E> el = elements.get(key);
+		E minEl = el.getFirst();
+		return minEl;
 	}
 
 }
