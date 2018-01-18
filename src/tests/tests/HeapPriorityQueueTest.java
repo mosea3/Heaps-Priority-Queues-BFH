@@ -11,6 +11,8 @@ import org.junit.Test;
 import classes.AscendingIntegerComparator;
 import classes.DescendingIntegerComparator;
 import classes.HeapPriorityQueue;
+import classes.Item;
+import classes.ItemComparator;
 import exceptions.EmptyPriorityQueueException;
 import exceptions.NotComparableException;
 import interfaces.Comparator;
@@ -81,6 +83,8 @@ public class HeapPriorityQueueTest {
 		assertFalse(pq.isEmpty());
 		assertEquals(1, (int) pq.minKey());
 		assertEquals("1", pq.minElement());
+		
+		
 
 		// 1 2 2 3 5 6 6 8 9
 		pq.insertItem(3, "3");
@@ -174,7 +178,6 @@ public class HeapPriorityQueueTest {
 		PriorityQueue<Integer, String> pq = new HeapPriorityQueue<Integer, String>(comparator);
 		pq.insertItem(null, null);
 	}
-
 	
 	
 }

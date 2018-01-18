@@ -10,5 +10,6 @@ public interface Heap<E> extends BasicCollection<E> {
 	public E removeMin() throws EmptyHeapException;
 	
 	public E minElement() throws EmptyHeapException;
+
 	
 }

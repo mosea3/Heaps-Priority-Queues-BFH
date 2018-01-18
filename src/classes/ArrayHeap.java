@@ -200,4 +200,7 @@ public class ArrayHeap<E> implements Heap<E> {
 		if (n == elements.length - 1)
 			elements = Arrays.copyOf(elements, elements.length * 2);
 	}
+	public void debug(){
+		System.out.println(elements.toString());
+	}
 }

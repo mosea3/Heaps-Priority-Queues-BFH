@@ -1,7 +1,11 @@
 package classes;
 
 import exceptions.NotComparableException;
-
+/**
+ * Simple ItemComparator for Type Item
+ * @author Moritz Kuendig
+ *
+ */
 public class ItemComparator extends AscendingComparator<Item> {
 
 	@Override

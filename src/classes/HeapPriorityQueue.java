@@ -10,25 +10,31 @@ import exceptions.NotComparableException;
 import interfaces.Comparator;
 import interfaces.Heap;
 import interfaces.PriorityQueue;
+import classes.Item;
 
 /**
  * This Class HeapPriorityQueue implements a Priority Queue based on a Heap and its comparators.
+ * *
+ * since 1.1 - overall generic types used (Hint: Haenni)
+ * since 1.2 - using LinkedList datastructure instead of ArrayList
+ * since 1.3 - implemented Item<E> and ItemComparator for making Map and LinkedList obsolete
+ * 
  * @author mosea3@bfh.ch
- * @version 1.0
- * @param <K> a Key of Integer
+ * @version 1.3
+ * @param <K> a Key
  * @param <E> an Element
  */
 public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 
-	private Map<Integer, LinkedList> elements;
-	private Comparator<Integer> c;
-	Heap<Integer> heap;
+	private Comparator<E> c; //do not use ArrayHeap comparator, use own ItemComparator
+	private Comparator<Item> ci;
+	Heap<Item> heap;
 	private int n;
 	
 	public HeapPriorityQueue(Comparator<Integer> comparator){
-		this.c = comparator;
-		this.heap = new ArrayHeap<Integer>(c);
-		this.elements = new HashMap<Integer, LinkedList>();
+		this.c = (Comparator<E>) comparator;
+		this.ci = new ItemComparator();
+		this.heap = new ArrayHeap<Item>(ci);
 		n = 0;
 	}
 	
@@ -59,26 +65,16 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	 **/
 	@Override
 	public void insertItem(K key, E element) throws NotComparableException {
-		if(!c.isComparable((Integer) key)) throw new NotComparableException();
+		if(!c.isComparable( element)) throw new NotComparableException();
 		
-		LinkedList<E> keyStore = null;
 		try{
-			heap.insertElement((int) key);
+			heap.insertElement(new Item<E>((int) key, element));
 		}catch (NotComparableException e) {
 		    throw e;
 		}
-		
-		if(elements.containsKey(key)){
-			keyStore = new LinkedList<E>(elements.get(key));
-			keyStore.add(element);
-		}else{
-			keyStore = new LinkedList<E>();
-			keyStore.add(element);
-		}
-		elements.put((int) key, keyStore);
 		n++;
 	}
-
+	
 	/**
 	 * dequeues an Element and returns it
 	 * @return E - returns an Element of Type E, which is to be removed of the Queue (eg. dequeued)
@@ -87,19 +83,9 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	@Override
 	public E removeMin() throws EmptyPriorityQueueException {
 		if(n<1) throw new EmptyPriorityQueueException(); //short notation for big effects
-		
-		int key = (int) minKey();
-		LinkedList<E> el = elements.get(key);
-		E minElement = el.getLast();
-		
-		if(el.size()>1){ 						//if multiple elements under one min key, just dequeue the first one under that key thus it was added as first FIFO
-			el.remove();						//FIFO, random dequeuing of same-high priority keys would be fair, but increases runtime-complexity	
-		}else{	
-			elements.remove(key);				
-		}
-		heap.removeMin();
+		Item minElement = heap.removeMin();
 		n--;
-		return minElement;
+		return (E) minElement.element;
 	}
 	
 	/**
@@ -108,11 +94,11 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	 */
 	@Override
 	public K minKey() throws EmptyPriorityQueueException {
-		if(n<1){
-			throw new EmptyPriorityQueueException();
-		}
-		K key = (K) heap.minElement();
-		return key;
+		if(n<1) throw new EmptyPriorityQueueException();
+		Item min = heap.minElement();
+		Integer minKey;
+		minKey = min.key;
+		return (K) minKey;
 	}
 	
 	/**
@@ -122,10 +108,9 @@ public class HeapPriorityQueue <K, E> implements PriorityQueue <K, E>{
 	@Override
 	public E minElement() throws EmptyPriorityQueueException {
 		if(n<1) throw new EmptyPriorityQueueException();
-		int key = (int) minKey();
-		LinkedList<E> el = elements.get(key);
-		E minEl = el.getFirst();
-		return minEl;
+		Item minItem = heap.minElement();
+		return (E) minItem.element;
 	}
 
+	
 }
